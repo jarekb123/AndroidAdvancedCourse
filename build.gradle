@@ -37,6 +37,7 @@ ext {
     conductorVersion = "2.1.5"
 
     butterKnifeVersion = "8.8.1"
+    mockitoVersion = "2.+"
 }
 
 task clean(type: Delete) {
