@@ -15,6 +15,11 @@ import pl.butajlo.androidadvanced.home.MainActivityComponent;
 })
 public abstract class ActivityBindingModule {
 
+    /**
+     * This method provides the injector to the MainActivity
+     * @param builder
+     * @return
+     */
     @Binds
     @IntoMap
     @ActivityKey(MainActivity.class)
