@@ -10,7 +10,7 @@ import timber.log.Timber;
 
 public class MyApplication extends Application {
 
-    private ApplicationComponent component;
+    protected ApplicationComponent component;
 
     @Inject
     ActivityInjector activityInjector;
@@ -19,14 +19,18 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        component = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
+        component = initComponent();
         component.inject(this);
 
         if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+    }
+
+    protected ApplicationComponent initComponent() {
+        return DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
     }
 
     public ActivityInjector getActivityInjector() {
