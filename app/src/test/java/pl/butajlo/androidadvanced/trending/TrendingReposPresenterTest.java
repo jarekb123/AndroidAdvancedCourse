@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Consumer;
+import pl.butajlo.androidadvanced.data.RepoRepository;
 import pl.butajlo.androidadvanced.data.RepoRequester;
 import pl.butajlo.androidadvanced.data.TrendingReposResponse;
 import pl.butajlo.androidadvanced.models.Repo;
@@ -27,7 +28,7 @@ public class TrendingReposPresenterTest {
     /* We want to have our tests focused on one thing we test (TrendingReposPresenter).
     * So we want to remove all other external variables. -> Mock them */
 
-    @Mock RepoRequester repoRequester;
+    @Mock RepoRepository repoRepository;
     @Mock TrendingReposViewModel viewModel;
 
     /* We need Consumer fields mocked, because we call some methods on TrendingReposViewModel
@@ -54,7 +55,7 @@ public class TrendingReposPresenterTest {
         // NOTE: repoRequester.getTrendingRepos() is called in loadRepos(), not in when(...)
         // (it's trivial, but these comments help me understand these things faster)
 
-        verify(repoRequester).getTrendingRepos(); // verify if getTrendingRepos() is called on repoRequester
+        verify(repoRepository).getTrendingRepos(); // verify if getTrendingRepos() is called on repoRequester
         verify(onSuccessConsumer).accept(repos); // verify if onSuccessConsumer accepts repos
 
         // verify if onErrorConsumer has no interactions (it shouldn't, because repos was loaded successfully)
@@ -101,7 +102,7 @@ public class TrendingReposPresenterTest {
 
         // So when the getTrendingRepos() on repoRequester is called in loadRepos()
         // we just emit repos successfully
-        when(repoRequester.getTrendingRepos()).thenReturn(Single.just(repos));
+        when(repoRepository.getTrendingRepos()).thenReturn(Single.just(repos));
 
         return repos;
     }
@@ -111,7 +112,7 @@ public class TrendingReposPresenterTest {
 
         // So when the getTrendingRepos() on repoRequester is called in loadRepos()
         // we don't emit repos successfully, we emit error
-        when(repoRequester.getTrendingRepos()).thenReturn(Single.error(error));
+        when(repoRepository.getTrendingRepos()).thenReturn(Single.error(error));
 
         return error;
     }
@@ -120,6 +121,6 @@ public class TrendingReposPresenterTest {
      * We can't just init Presenter in setup method, because there is loadRepos() called in the constructor
      */
     private void initPresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRequester);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository);
     }
 }
