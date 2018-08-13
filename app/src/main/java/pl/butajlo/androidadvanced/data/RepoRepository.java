@@ -51,7 +51,7 @@ public class RepoRepository {
 
     private Maybe<List<Repo>> cachedTrendingRepos() {
         return Maybe.create(e -> {
-           if(cachedTrendingRepos.isEmpty()) {
+           if(!cachedTrendingRepos.isEmpty()) {
                e.onSuccess(cachedTrendingRepos);
            }
            e.onComplete();
