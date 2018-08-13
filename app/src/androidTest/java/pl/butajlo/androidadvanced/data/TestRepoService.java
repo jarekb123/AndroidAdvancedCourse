@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Single;
 
+import pl.butajlo.androidadvanced.models.Repo;
 import pl.butajlo.androidadvanced.test.TestUtils;
 
 @Singleton
@@ -33,5 +34,10 @@ public class TestRepoService implements RepoService {
 
     public void setSendError(boolean sendError) {
         this.sendError = sendError;
+    }
+
+    @Override
+    public Single<Repo> getRepo(String repoOwner, String repoName) {
+        return null;
     }
 }
