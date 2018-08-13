@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidAdvanced</string>
     <string name="api_error_repos">Error loading repos</string>
+    <string name="creation_date_label">Created on:</string>
+    <string name="updated_date_label">Updated on:</string>
+    <string name="contributors_label">Contributors:</string>
 </resources>
