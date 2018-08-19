@@ -45,7 +45,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return data.get(position).id();
+        return data.get(position).getId();
     }
 
     public void setData(List<Repo> repos) {
@@ -83,10 +83,10 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
         void bind(Repo repo) {
             this.repo = repo;
 
-            tvRepoName.setText(repo.name());
-            tvRepoDescription.setText(repo.description());
-            tvForkCount.setText(String.valueOf(repo.forksCount()));
-            tvStarCount.setText(String.valueOf(repo.stargazersCount()));
+            tvRepoName.setText(repo.getName());
+            tvRepoDescription.setText(repo.getDescription());
+            tvForkCount.setText(String.valueOf(repo.getForksCount()));
+            tvStarCount.setText(String.valueOf(repo.getStargazersCount()));
         }
     }
 

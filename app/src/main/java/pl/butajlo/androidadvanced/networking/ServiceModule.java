@@ -1,6 +1,7 @@
 package pl.butajlo.androidadvanced.networking;
 
 import com.squareup.moshi.Moshi;
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -23,6 +24,7 @@ public abstract class ServiceModule {
         return new Moshi.Builder()
                 .add(AdapterFactory.create())
                 .add(new ZoneDateTimeAdapter())
+                .add(new KotlinJsonAdapterFactory())
                 .build();
     }
 

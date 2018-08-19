@@ -29,7 +29,7 @@ class RepoDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldData.get(oldItemPosition).id().equals(newData.get(newItemPosition).id());
+        return oldData.get(oldItemPosition).getId() == newData.get(newItemPosition).getId();
     }
 
     @Override

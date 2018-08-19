@@ -1,12 +1,14 @@
 package pl.butajlo.androidadvanced.data;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
 
+import pl.butajlo.androidadvanced.models.Contributor;
 import pl.butajlo.androidadvanced.models.Repo;
 import pl.butajlo.androidadvanced.test.TestUtils;
 
@@ -38,6 +40,11 @@ public class TestRepoService implements RepoService {
 
     @Override
     public Single<Repo> getRepo(String repoOwner, String repoName) {
+        return null;
+    }
+
+    @Override
+    public Single<List<Contributor>> getContributors(String url) {
         return null;
     }
 }

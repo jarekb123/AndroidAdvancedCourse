@@ -4,4 +4,6 @@
     <string name="creation_date_label">Created on:</string>
     <string name="updated_date_label">Updated on:</string>
     <string name="contributors_label">Contributors:</string>
+    <string name="api_error_single_repo">Error loading repo details</string>
+    <string name="api_error_single_repo_contributors">Error loading repo contributors</string>
 </resources>
