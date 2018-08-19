@@ -1,6 +1,7 @@
 package pl.butajlo.androidadvanced.testutils;
 
 import com.squareup.moshi.Moshi;
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,8 +58,9 @@ public class TestUtils {
 
     private static Moshi initializeMoshi() {
         return new Moshi.Builder()
-                .add(AdapterFactory.create())
+                .add(new KotlinJsonAdapterFactory())
                 .add(new ZoneDateTimeAdapter())
+                .add(AdapterFactory.create())
                 .build();
     }
 
