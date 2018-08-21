@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
-import pl.butajlo.androidadvanced.models.AdapterFactory;
 import pl.butajlo.androidadvanced.models.ZoneDateTimeAdapter;
 
 public class TestUtils {
@@ -60,7 +59,6 @@ public class TestUtils {
         return new Moshi.Builder()
                 .add(new KotlinJsonAdapterFactory())
                 .add(new ZoneDateTimeAdapter())
-                .add(AdapterFactory.create())
                 .build();
     }
 
