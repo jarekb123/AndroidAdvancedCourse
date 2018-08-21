@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Call;
-import pl.butajlo.androidadvanced.models.AdapterFactory;
 import pl.butajlo.androidadvanced.models.ZoneDateTimeAdapter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -22,7 +21,6 @@ public abstract class ServiceModule {
     @Singleton
     static Moshi provideMoshi() {
         return new Moshi.Builder()
-                .add(AdapterFactory.create())
                 .add(new ZoneDateTimeAdapter())
                 .add(new KotlinJsonAdapterFactory())
                 .build();
