@@ -98,7 +98,7 @@ public class TrendingReposPresenterTest {
 
     private List<Repo> setupSuccess() {
         TrendingReposResponse response = TestUtils.loadJson("mock/get_trending_repos.json", TrendingReposResponse.class);
-        List<Repo> repos = response.repos();
+        List<Repo> repos = response.getRepos();
 
         // So when the getTrendingRepos() on repoRequester is called in loadRepos()
         // we just emit repos successfully

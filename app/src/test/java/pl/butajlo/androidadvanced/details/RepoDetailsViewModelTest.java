@@ -31,13 +31,13 @@ public class RepoDetailsViewModelTest {
         viewModel.processRepo().accept(repo);
 
         viewModel.repoDetails().test().assertValue(
-                RepoDetailsState.builder()
-                    .loading(false)
-                    .name("RxJava")
-                    .description("RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.")
-                    .createdDate("08.01.2013")
-                    .updatedDate("06.10.2017")
-                    .build()
+                new RepoDetailsState(
+                        false,
+                        "RxJava",
+                        "RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.",
+                        "08.01.2013",
+                        "06.10.2017"
+                )
         );
     }
 
@@ -46,10 +46,7 @@ public class RepoDetailsViewModelTest {
         viewModel.detailsError().accept(new IOException());
 
         viewModel.repoDetails().test().assertValue(
-                RepoDetailsState.builder()
-                    .loading(false)
-                    .errorRes(R.string.api_error_single_repo)
-                    .build()
+                new RepoDetailsState(false,null,null,null,null, R.string.api_error_single_repo)
         );
     }
 
@@ -58,10 +55,7 @@ public class RepoDetailsViewModelTest {
         viewModel.processContributors().accept(contributors);
 
         viewModel.contributors().test().assertValue(
-                ContributorState.builder()
-                    .loading(false)
-                    .contributors(contributors)
-                    .build()
+                new ContributorState(false, contributors)
         );
     }
 
@@ -69,10 +63,7 @@ public class RepoDetailsViewModelTest {
     public void contributorsError() throws Exception {
         viewModel.contributorsError().accept(new IOException());
         viewModel.contributors().test().assertValue(
-                ContributorState.builder()
-                        .loading(false)
-                        .errorRes(R.string.api_error_single_repo_contributors)
-                        .build()
+                new ContributorState(false, null, R.string.api_error_single_repo_contributors)
         );
     }
 
