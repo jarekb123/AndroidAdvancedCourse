@@ -20,7 +20,7 @@ public class RepoRequester {
 
     Single<List<Repo>> getTrendingRepos() {
         return service.getTrendingRepos()
-                .map(TrendingReposResponse::repos);
+                .map(TrendingReposResponse::getRepos);
     }
 
     Single<Repo> getRepo(String repoOwner, String repoName) {
