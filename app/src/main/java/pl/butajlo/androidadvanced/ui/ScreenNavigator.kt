@@ -17,4 +17,6 @@ interface ScreenNavigator {
      * It is used to clean the router, if the activity is destroyed
      */
     fun clear()
+
+    fun goToRepoDetails(repoOwner: String, repoName: String)
 }

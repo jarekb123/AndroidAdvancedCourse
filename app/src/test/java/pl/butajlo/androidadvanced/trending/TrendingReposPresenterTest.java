@@ -17,6 +17,7 @@ import pl.butajlo.androidadvanced.data.RepoRequester;
 import pl.butajlo.androidadvanced.data.TrendingReposResponse;
 import pl.butajlo.androidadvanced.models.Repo;
 import pl.butajlo.androidadvanced.testutils.TestUtils;
+import pl.butajlo.androidadvanced.ui.ScreenNavigator;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -36,6 +37,7 @@ public class TrendingReposPresenterTest {
     @Mock Consumer<Throwable> onErrorConsumer;
     @Mock Consumer<List<Repo>> onSuccessConsumer;
     @Mock Consumer<Boolean> loadingConsumer;
+    @Mock ScreenNavigator screenNavigator;
 
     private TrendingReposPresenter presenter;
 
@@ -93,7 +95,12 @@ public class TrendingReposPresenterTest {
 
     @Test
     public void onRepoClicked() throws Exception {
-        //TODO
+        Repo repo = TestUtils.loadJson("mock/get_repo.json", Repo.class);
+        setupSuccess();
+        initPresenter();
+        presenter.onRepoClicked(repo);
+
+        verify(screenNavigator).goToRepoDetails(repo.getOwner().getLogin(), repo.getName());
     }
 
     private List<Repo> setupSuccess() {
@@ -121,6 +128,6 @@ public class TrendingReposPresenterTest {
      * We can't just init Presenter in setup method, because there is loadRepos() called in the constructor
      */
     private void initPresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRepository);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository, screenNavigator);
     }
 }
