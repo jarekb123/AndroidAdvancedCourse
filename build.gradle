@@ -36,10 +36,10 @@ ext {
     rxAndroidVersion = "2.0.2"
     rxRelayVersion = "2.0.0"
     conductorVersion = "2.1.5"
-
     butterKnifeVersion = "8.8.1"
-    mockitoVersion = "2.+"
+    glideVersion = "4.2.0"
 
+    mockitoVersion = "2.+"
     mockitoKotlinVersion = "2.+"
 }
 
