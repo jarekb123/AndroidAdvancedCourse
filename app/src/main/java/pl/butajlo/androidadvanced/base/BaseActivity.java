@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import pl.butajlo.androidadvanced.R;
 import pl.butajlo.androidadvanced.di.Injector;
 import pl.butajlo.androidadvanced.di.ScreenInjector;
+import pl.butajlo.androidadvanced.ui.ActivityViewInterceptor;
 import pl.butajlo.androidadvanced.ui.ScreenNavigator;
 
 
@@ -45,6 +46,9 @@ public abstract class BaseActivity extends AppCompatActivity
     @Inject
     ScreenNavigator screenNavigator;
 
+    @Inject
+    ActivityViewInterceptor activityViewInterceptor;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         /* We're checking if the activity was actually created before (if yes, the Bundle won't be NULL)
@@ -55,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity
             instanceId = UUID.randomUUID().toString();
         }
         Injector.inject(this); // Injecting the dependencies with the Activity Injector
-        setContentView(layoutRes());
+        activityViewInterceptor.setContentView(this, layoutRes());
 
         /* In this course the teacher is using Conductor instead of Fragments.
            The following section is used by Conductor */
@@ -87,6 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity
                             // in the cache in ActivityInjector
             Injector.clearComponent(this);
         }
+        activityViewInterceptor.clear();
     }
 
     @Override
