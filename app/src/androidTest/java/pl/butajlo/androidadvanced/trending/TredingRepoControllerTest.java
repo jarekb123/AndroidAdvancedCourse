@@ -4,6 +4,9 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.bluelinelabs.conductor.Controller;
+
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +18,7 @@ import pl.butajlo.androidadvanced.R;
 import pl.butajlo.androidadvanced.base.TestApplication;
 import pl.butajlo.androidadvanced.data.TestRepoService;
 import pl.butajlo.androidadvanced.home.MainActivity;
+import pl.butajlo.androidadvanced.test.ControllerTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -24,14 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class TredingRepoControllerTest {
-
-    @Inject
-    TestRepoService repoService;
-
-    @Rule
-    public ActivityTestRule<MainActivity> activityRule =
-            new ActivityTestRule<MainActivity>(MainActivity.class, true, false);
+public class TredingRepoControllerTest extends ControllerTest {
 
     @Before
     public void setup() {
@@ -40,8 +37,8 @@ public class TredingRepoControllerTest {
 
     @Test
     public void loadRepos() {
-        repoService.setSendError(false);
-        activityRule.launchActivity(null);
+        getRepoService().clearErrorFlags();
+        launch();
 
         onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         onView(withId(R.id.tv_error)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
@@ -52,8 +49,8 @@ public class TredingRepoControllerTest {
 
     @Test
     public void loadReposError() {
-        repoService.setSendError(true);
-        activityRule.launchActivity(null);
+        getRepoService().setErrorFlags(TestRepoService.FLAG_TRENDING_REPOS);
+        launch();
 
         onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
         onView(withId(R.id.repo_list)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
@@ -64,5 +61,11 @@ public class TredingRepoControllerTest {
                                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
                         )
                 ));
+    }
+
+    @NotNull
+    @Override
+    protected Controller controllerToLaunch() {
+        return new TrendingReposController();
     }
 }

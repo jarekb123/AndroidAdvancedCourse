@@ -6,6 +6,8 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
+import pl.butajlo.androidadvanced.details.RepoDetailsComponent;
+import pl.butajlo.androidadvanced.details.RepoDetailsController;
 import pl.butajlo.androidadvanced.di.ControllerKey;
 import pl.butajlo.androidadvanced.trending.TrendingReposComponent;
 import pl.butajlo.androidadvanced.trending.TrendingReposController;
@@ -18,5 +20,11 @@ public abstract class TestScreenBindingModule {
     @IntoMap
     @ControllerKey(TrendingReposController.class)
     abstract AndroidInjector.Factory<? extends Controller> bindTredingReposInjector(TrendingReposComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @ControllerKey(RepoDetailsController.class)
+    abstract AndroidInjector.Factory<? extends Controller> bindRepoDetailsInjector(RepoDetailsComponent.Builder builder);
+
 
 }

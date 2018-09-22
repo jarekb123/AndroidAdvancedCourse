@@ -1,5 +1,7 @@
 package pl.butajlo.androidadvanced.networking;
 
+import android.util.Log;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -7,6 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 @Module
 public abstract class NetworkModule {
@@ -14,13 +17,17 @@ public abstract class NetworkModule {
     @Provides
     @Singleton
     static Call.Factory provideOkHttp() {
-        return new OkHttpClient.Builder().build();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
     }
 
     @Provides
     @Named("base_url")
     static String provideBaseUrl() {
-        return "https://api.github.com";
+        return "https://api.github.com/";
     }
 
 }

@@ -9,4 +9,6 @@ data class  ContributorState @JvmOverloads constructor(
         val loading: Boolean,
         val contributors: List<Contributor>? = null,
         val errorRes: Int? = null
-)
+) {
+    fun isSuccess() = errorRes == null
+}

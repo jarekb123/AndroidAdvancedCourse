@@ -7,4 +7,6 @@ data class RepoDetailsState @JvmOverloads constructor(
         val createdDate: String? = null,
         val updatedDate: String? = null,
         val errorRes: Int? = null
-)
+) {
+    fun isSuccess() = errorRes == null
+}

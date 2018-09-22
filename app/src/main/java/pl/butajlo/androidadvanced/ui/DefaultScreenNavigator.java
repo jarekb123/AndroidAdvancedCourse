@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import pl.butajlo.androidadvanced.details.RepoDetailsController;
 import pl.butajlo.androidadvanced.di.ActivityScope;
 
-@ActivityScope
 public class DefaultScreenNavigator implements ScreenNavigator {
 
     private Router router;

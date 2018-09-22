@@ -67,6 +67,11 @@ public class RepoRepository {
                 }).toMaybe();
     }
 
+    public void clearCache() {
+        cachedContributors.clear();
+        cachedTrendingRepos.clear();
+    }
+
     private Maybe<Repo> cachedRepo(String repoOwner, String repoName) {
         return Maybe.create(e -> {
             for(Repo cachedRepo : cachedTrendingRepos) {
@@ -101,5 +106,4 @@ public class RepoRepository {
                 })
                 .toMaybe();
     }
-
 }
