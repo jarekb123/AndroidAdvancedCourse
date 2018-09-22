@@ -71,6 +71,8 @@ class RepoDetailsController(bundle: Bundle) : BaseController(bundle) {
                             view?.tv_error?.visibility = if(it.isSuccess()) { View.GONE } else { View.VISIBLE }
                             view?.tv_repo_name?.text = it.name
                             view?.tv_updated_date?.text = it.updatedDate
+                            view?.tv_repo_description?.text = it.description
+                            view?.tv_creation_date?.text = it.createdDate
                         }
                     },
                 viewModel.contributors()

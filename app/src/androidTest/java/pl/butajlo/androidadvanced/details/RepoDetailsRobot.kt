@@ -43,9 +43,19 @@ internal class RepoDetailsRobot {
         return this
     }
 
+    fun verifyLoadingVisiblity(visibility: Visibility): RepoDetailsRobot {
+        onView(withId(R.id.loading_indicator)).check(matches(withEffectiveVisibility(visibility)))
+        return this
+    }
+
     fun verifyContributorsErrorText(errorRes: Int): RepoDetailsRobot {
         val textMatcher = if(errorRes == 0) { withText("") } else { withText(errorRes) }
         onView(withId(R.id.tv_contributors_error)).check(matches(textMatcher))
+        return this
+    }
+
+    fun verifyContributorsErrorVisibility(visibility: Visibility): RepoDetailsRobot {
+        onView(withId(R.id.tv_contributors_error)).check(matches(withEffectiveVisibility(visibility)))
         return this
     }
 

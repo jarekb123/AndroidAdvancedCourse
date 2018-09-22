@@ -14,6 +14,7 @@ import pl.butajlo.androidadvanced.trending.TrendingReposController;
 
 @Module(subcomponents = {
         TrendingReposComponent.class,
+        RepoDetailsComponent.class,
 })
 public abstract class TestScreenBindingModule {
     @Binds

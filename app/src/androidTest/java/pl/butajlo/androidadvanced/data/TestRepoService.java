@@ -20,8 +20,8 @@ import pl.butajlo.androidadvanced.test.TestUtils;
 public class TestRepoService implements RepoService {
 
     public static final int FLAG_TRENDING_REPOS = 1;
-    public static final int FLAG_GET_REPO = 2;
-    public static final int FLAG_GET_CONTRIBUTORES = 3;
+    public static final int FLAG_GET_REPO = 3;
+    public static final int FLAG_GET_CONTRIBUTORS = 4;
 
 
     private final TestUtils testUtils;
@@ -62,9 +62,9 @@ public class TestRepoService implements RepoService {
 
     @Override
     public Single<List<Contributor>> getContributors(String url) {
-        if((errorFlags & FLAG_GET_CONTRIBUTORES) == 0) {
+        if((errorFlags & FLAG_GET_CONTRIBUTORS) == 0) {
             List<Contributor> contributors = testUtils.loadJson("mock/get_contributors.json", Types.newParameterizedType(List.class, Contributor.class));
-            if((holdFlags & FLAG_GET_CONTRIBUTORES) == FLAG_GET_CONTRIBUTORES) {
+            if((holdFlags & FLAG_GET_CONTRIBUTORS) == FLAG_GET_CONTRIBUTORS) {
                 return holdingSingle(contributors, holdFlags);
             }
             return Single.just(contributors);
