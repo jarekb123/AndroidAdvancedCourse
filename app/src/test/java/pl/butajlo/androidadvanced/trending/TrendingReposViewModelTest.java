@@ -33,7 +33,7 @@ public class TrendingReposViewModelTest {
 
     @Test
     public void repos() throws Exception {
-        TrendingReposResponse response = TestUtils.loadJson("mock/get_trending_repos.json", TrendingReposResponse.class);
+        TrendingReposResponse response = TestUtils.loadJson("mock/search/get_trending_repos.json", TrendingReposResponse.class);
         viewModel.reposUpdated().accept(response.getRepos());
 
         viewModel.repos().test().assertValue(response.getRepos());

@@ -95,7 +95,7 @@ public class TrendingReposPresenterTest {
 
     @Test
     public void onRepoClicked() throws Exception {
-        Repo repo = TestUtils.loadJson("mock/get_repo.json", Repo.class);
+        Repo repo = TestUtils.loadJson("mock/repos/get_repo.json", Repo.class);
         setupSuccess();
         initPresenter();
         presenter.onRepoClicked(repo);
@@ -104,7 +104,7 @@ public class TrendingReposPresenterTest {
     }
 
     private List<Repo> setupSuccess() {
-        TrendingReposResponse response = TestUtils.loadJson("mock/get_trending_repos.json", TrendingReposResponse.class);
+        TrendingReposResponse response = TestUtils.loadJson("mock/search/get_trending_repos.json", TrendingReposResponse.class);
         List<Repo> repos = response.getRepos();
 
         // So when the getTrendingRepos() on repoRequester is called in loadRepos()

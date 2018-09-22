@@ -25,8 +25,8 @@ class RepoDetailsPresenterTest {
         const val NAME = "name"
     }
 
-    private val repo = TestUtils.loadJson("mock/get_repo.json", Repo::class.java)
-    private val contributors = TestUtils.loadJson<List<Contributor>>("mock/get_contributors.json",
+    private val repo = TestUtils.loadJson("mock/repos/get_repo.json", Repo::class.java)
+    private val contributors = TestUtils.loadJson<List<Contributor>>("mock/repos/contributors/get_contributors.json",
             Types.newParameterizedType(List::class.java, Contributor::class.java))
 
     val repoRepository = mock<RepoRepository> {

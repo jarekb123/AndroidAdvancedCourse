@@ -10,6 +10,7 @@ import pl.butajlo.androidadvanced.data.TestRepoServiceModule;
 import pl.butajlo.androidadvanced.networking.ServiceModule;
 import pl.butajlo.androidadvanced.trending.TredingRepoControllerTest;
 import pl.butajlo.androidadvanced.ui.NavigationModule;
+import pl.butajlo.androidadvanced.ui.TestActivityViewInterceptorModule;
 import pl.butajlo.androidadvanced.ui.TestNavigationModule;
 import pl.butajlo.androidadvanced.ui.TestScreenNavigator;
 
@@ -21,6 +22,7 @@ import pl.butajlo.androidadvanced.ui.TestScreenNavigator;
                 TestRepoServiceModule.class,
                 ServiceModule.class,
                 TestNavigationModule.class,
+                TestActivityViewInterceptorModule.class
 })
 public interface TestApplicationComponent extends ApplicationComponent {
 
