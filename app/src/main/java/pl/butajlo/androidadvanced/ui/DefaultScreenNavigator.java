@@ -9,19 +9,29 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
+import pl.butajlo.androidadvanced.base.BaseActivity;
 import pl.butajlo.androidadvanced.details.RepoDetailsController;
 import pl.butajlo.androidadvanced.di.ActivityScope;
+import pl.butajlo.androidadvanced.lifecycle.ActivityLifecycleTask;
 
-public class DefaultScreenNavigator implements ScreenNavigator {
+@ActivityScope
+public class DefaultScreenNavigator extends ActivityLifecycleTask implements ScreenNavigator {
+
+    @Inject
+    DefaultScreenNavigator() {}
 
     private Router router;
 
-    @Inject
-    DefaultScreenNavigator() {
-
+    @Override
+    public void onCreate(BaseActivity activity) {
+        initWithRouter(activity.getRouter(), activity.initialScreen());
     }
 
     @Override
+    public void onDestroy(@NotNull BaseActivity activity) {
+        router = null;
+    }
+
     public void initWithRouter(Router router, Controller rootScreen) {
         this.router = router;
         if(!router.hasRootController()) {
@@ -32,11 +42,6 @@ public class DefaultScreenNavigator implements ScreenNavigator {
     @Override
     public boolean pop() {
         return router != null && router.handleBack();
-    }
-
-    @Override
-    public void clear() {
-        router = null;
     }
 
     @Override

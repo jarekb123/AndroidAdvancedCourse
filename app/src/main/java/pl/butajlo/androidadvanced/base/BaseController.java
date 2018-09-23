@@ -9,16 +9,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bluelinelabs.conductor.Controller;
+import com.bluelinelabs.conductor.ControllerChangeHandler;
+import com.bluelinelabs.conductor.ControllerChangeType;
+
+import java.util.Set;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import pl.butajlo.androidadvanced.di.Injector;
+import pl.butajlo.androidadvanced.lifecycle.ScreenLifecycleTask;
 
 public abstract class BaseController extends Controller {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
+
+    @Inject
+    Set<ScreenLifecycleTask> screenLifecycleTasks;
 
     private boolean injected = false;
     private Unbinder unbinder;
@@ -51,6 +61,17 @@ public abstract class BaseController extends Controller {
     }
 
     @Override
+    protected void onChangeStarted(@NonNull ControllerChangeHandler changeHandler, @NonNull ControllerChangeType changeType) {
+        screenLifecycleTasks.forEach(task -> {
+            if(changeType.isEnter) {
+                task.onEnterScope(getView());
+            } else {
+                task.onExitScope();
+            }
+        });
+    }
+
+    @Override
     protected void onDestroyView(@NonNull View view) {
         super.onDestroyView(view);
         disposables.clear();
@@ -58,6 +79,12 @@ public abstract class BaseController extends Controller {
             unbinder.unbind();
             unbinder = null;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        screenLifecycleTasks.forEach(ScreenLifecycleTask::onDestroy);
     }
 
     protected void onViewBound(View view) {}

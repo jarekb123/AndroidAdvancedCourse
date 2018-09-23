@@ -13,6 +13,9 @@ import com.bluelinelabs.conductor.Controller;
 import com.bluelinelabs.conductor.ControllerChangeHandler;
 import com.bluelinelabs.conductor.Router;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -20,11 +23,13 @@ import javax.inject.Inject;
 import pl.butajlo.androidadvanced.R;
 import pl.butajlo.androidadvanced.di.Injector;
 import pl.butajlo.androidadvanced.di.ScreenInjector;
+import pl.butajlo.androidadvanced.lifecycle.ActivityLifecycleTask;
 import pl.butajlo.androidadvanced.ui.ActivityViewInterceptor;
+import pl.butajlo.androidadvanced.ui.RouterProvider;
 import pl.butajlo.androidadvanced.ui.ScreenNavigator;
 
 
-public abstract class BaseActivity extends AppCompatActivity
+public abstract class BaseActivity extends AppCompatActivity implements RouterProvider
 {
     private static String INSTANCE_ID_KEY = "instance_id";
 
@@ -49,6 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity
     @Inject
     ActivityViewInterceptor activityViewInterceptor;
 
+    @Inject
+    Set<ActivityLifecycleTask> activityLifecycleTasks;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         /* We're checking if the activity was actually created before (if yes, the Bundle won't be NULL)
@@ -68,9 +76,33 @@ public abstract class BaseActivity extends AppCompatActivity
             throw new NullPointerException("Activity must have a view with id: screen_container");
         }
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState);
-        screenNavigator.initWithRouter(router, initialScreen());
         monitorBackStack();
+        activityLifecycleTasks.forEach(task -> task.onCreate(this));
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        activityLifecycleTasks.forEach(task -> task.onStart(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityLifecycleTasks.forEach(task -> task.onPause(this));
+    }
+
+    @Override
+    protected void onPause() {
+        activityLifecycleTasks.forEach(task -> task.onPause(this));
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        activityLifecycleTasks.forEach(task -> task.onStop(this));
+        super.onStop();
     }
 
     /**
@@ -86,12 +118,12 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        screenNavigator.clear();
         if(isFinishing()) { // If the activity is finishing we can remove the stored Android Injector
                             // in the cache in ActivityInjector
             Injector.clearComponent(this);
         }
         activityViewInterceptor.clear();
+        activityLifecycleTasks.forEach(task -> task.onDestroy(this));
     }
 
     @Override
@@ -101,6 +133,14 @@ public abstract class BaseActivity extends AppCompatActivity
         }
     }
 
+    @NotNull
+    @Override
+    public Router getRouter() {
+        return router;
+    }
+
+
+
     @LayoutRes
     protected abstract int layoutRes();
 
@@ -108,7 +148,9 @@ public abstract class BaseActivity extends AppCompatActivity
      * Returns the initial screen displayed on the activity
      * @return Initial screen
      */
-    protected abstract Controller initialScreen();
+    @NotNull
+    @Override
+    public abstract Controller initialScreen();
 
     private void monitorBackStack() {
         router.addChangeListener(new ControllerChangeHandler.ControllerChangeListener() {
