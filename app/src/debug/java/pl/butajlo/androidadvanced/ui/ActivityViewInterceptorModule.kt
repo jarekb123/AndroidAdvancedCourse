@@ -7,5 +7,5 @@ import dagger.Module
 abstract class ActivityViewInterceptorModule {
 
     @Binds
-    abstract fun bindDebugActivityViewInterceptor(debugActivityViewInterceptor: DebugActivityViewInterceptor)
+    abstract fun bindDebugActivityViewInterceptor(debugActivityViewInterceptor: DebugActivityViewInterceptor): ActivityViewInterceptor
 }

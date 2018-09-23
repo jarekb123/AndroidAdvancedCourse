@@ -4,11 +4,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-abstract class TestActivityViewInterceptorModule {
+class TestActivityViewInterceptorModule {
 
-    companion object {
-        @JvmStatic
-        @Provides
-        fun provideActivityViewInterceptor() = ActivityViewInterceptor.DEFAULT
-    }
+    @Provides
+    fun provideActivityViewInterceptor() = ActivityViewInterceptor.DEFAULT
+
 }

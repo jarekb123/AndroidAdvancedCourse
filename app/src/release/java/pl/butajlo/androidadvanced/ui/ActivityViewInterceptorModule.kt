@@ -8,6 +8,7 @@ abstract class ActivityViewInterceptorModule {
 
     companion object {
         @Provides
+        @JvmStatic
         fun provideActivityViewInterceptor() = ActivityViewInterceptor.DEFAULT
     }
 

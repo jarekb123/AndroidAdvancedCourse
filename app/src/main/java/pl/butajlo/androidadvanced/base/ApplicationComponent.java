@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import pl.butajlo.androidadvanced.data.RepoServiceModule;
 import pl.butajlo.androidadvanced.networking.ServiceModule;
+import pl.butajlo.androidadvanced.ui.ActivityViewInterceptorModule;
 
 @Singleton
 @Component(modules = {
@@ -12,7 +13,6 @@ import pl.butajlo.androidadvanced.networking.ServiceModule;
         ActivityBindingModule.class,
         ServiceModule.class,
         RepoServiceModule.class,
-
 })
 public interface ApplicationComponent {
 

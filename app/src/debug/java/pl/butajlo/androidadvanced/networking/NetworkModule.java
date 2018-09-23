@@ -16,11 +16,12 @@ public abstract class NetworkModule {
 
     @Provides
     @Singleton
-    static Call.Factory provideOkHttp() {
+    static Call.Factory provideOkHttp(MockInterceptor mockInterceptor) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
                 .addInterceptor(logging)
+                .addInterceptor(mockInterceptor)
                 .build();
     }
 
